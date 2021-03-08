@@ -8,17 +8,18 @@ from email.mime.text import MIMEText
 def bomber():
     SRC_EMAIL = os.getenv("SRC_EMAIL")
     DEST_EMAIL = os.getenv("DEST_EMAIL")
+    SRC_PASSWORD = os.getenv("SRC_PASSWORD")
 
-    smtp_obj = smtplib.SMTP("smpt.mail.ru", 465)
-    msg = MIMEText("(✖╭╮✖)")
-    smtp_obj.starttls()
+    with smtplib.SMTP_SSL("smtp.mail.ru", 465) as smtp_obj:
+        smtp_obj.login(SRC_EMAIL, SRC_PASSWORD)
+        msg = MIMEText("(✖╭╮✖)")
 
-    msg['Subject'] = "You've been bombed."
-    msg['From'] = SRC_EMAIL
-    msg['To'] = DEST_EMAIL
+        msg['Subject'] = "You've been bombed."
+        msg['From'] = SRC_EMAIL
+        msg['To'] = DEST_EMAIL
 
-    smtp_obj.sendmail(SRC_EMAIL, DEST_EMAIL, msg.as_string())
-    smtp_obj.close()
+        smtp_obj.sendmail(SRC_EMAIL, DEST_EMAIL, msg.as_string())
+        smtp_obj.close()
 
 
 if __name__ == '__main__':
