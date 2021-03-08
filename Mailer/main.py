@@ -12,9 +12,9 @@ def bomber():
 
     with smtplib.SMTP_SSL("smtp.gmail.com", 587) as smtp_obj:
         smtp_obj.login(SRC_EMAIL, SRC_PASSWORD)
-        msg = MIMEText("(✖╭╮✖)")
+        msg = MIMEText("...paste message here...")
 
-        msg['Subject'] = "You've been bombed."
+        msg['Subject'] = "...paste subject here..."
         msg['From'] = SRC_EMAIL
         msg['To'] = DEST_EMAIL
 
