@@ -10,7 +10,7 @@ def bomber():
     DEST_EMAIL = os.getenv("DEST_EMAIL")
     SRC_PASSWORD = os.getenv("SRC_PASSWORD")
 
-    with smtplib.SMTP_SSL("smtp.mail.ru", 465) as smtp_obj:
+    with smtplib.SMTP_SSL("smtp.gmail.com", 587) as smtp_obj:
         smtp_obj.login(SRC_EMAIL, SRC_PASSWORD)
         msg = MIMEText("(✖╭╮✖)")
 
