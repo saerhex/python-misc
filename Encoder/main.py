@@ -2,7 +2,7 @@ from __future__ import annotations
 from typing import Callable
 import matplotlib.pyplot as plt
 import numpy as np
-from logical_encoding.encoders import *
+from logical_encoding import *
 
 
 X = np.arange(32)

@@ -1,9 +1,24 @@
-def nrz(bitseq: list):
+def nrz(bitseq: list) -> list:
+    """
+    Simple encoding method. Zero means low-level voltage,
+    One means high-level voltage.
+
+    :param bitseq: list of bits to be encoded.
+    :return: list of encoded bits.
+    """
     res = [bit for bit in bitseq]
     return res
 
 
-def nrzi(bitseq: list):
+def nrzi(bitseq: list) -> list:
+    """
+    NRZI encoding method.
+    Iterate throw all bit sequence and if 1 occures - reverse
+    current value of bits, for example, 1 reverse to 0, 0 to 1 etc.
+
+    :param bitseq: list of bits to be encoded.
+    :return: list of encoded bits.
+    """
     res = []
     cur_val = 0
     for bit in bitseq:
@@ -14,6 +29,22 @@ def nrzi(bitseq: list):
 
 
 def enc_2b1q(bitseq: list):
+    """
+    2B1Q encoding method.
+    Every 2 bits of sequence refer to specific value in this Quaternary table:
+    ___________
+    | 00 | -3 |
+    |____|____|
+    | 01 | -1 |
+    |____|____|
+    | 11 |  1 |
+    |____|____|
+    | 10 |  3 |
+    |____|____|
+
+    :param bitseq: list of bits to be encoded.
+    :return: list of encoded bits.
+    """
     res = []
     quadras = {
         "00": -3,
