@@ -5,9 +5,6 @@ import numpy as np
 from logical_encoding import *
 
 
-X = np.arange(32)
-
-
 class Encoder:
 
     def __init__(self, string, encoding_method: Callable[[list], None] = None):
@@ -32,18 +29,19 @@ class Encoder:
 
 class Plotter:
 
-    def __init__(self, rows, cols, base_bits: list):
+    def __init__(self, x_axis: int, base_bits: list, rows, cols):
+        self.X = np.arange(x_axis)
         self.base_bits = base_bits
         self.rows = rows
         self.cols = cols
 
     def make_plot(self, bits: list, i: int, title: str):
         plt.subplot(self.rows, self.cols, i)
-        plt.step(X, bits, where="post", color='black', linewidth='3')
-        min_y, max_y = min(bits), max(bits)
+        plt.step(self.X, bits, where="post", color='black', linewidth='3')
+        min_y, max_y = min(bits), max(bits) + 0.4
 
         for tbit, bit in enumerate(self.base_bits):
-            plt.text(tbit + 0.2, max_y - 0.5, str(bit))
+            plt.text(tbit, max_y - 0.2, str(bit))
 
         keys = ['top', 'bottom', 'right']
 
@@ -56,7 +54,7 @@ class Plotter:
         plt.title(title)
 
     def show_plot(self, data: dict[str, list]):
-        plt.figure(figsize=(12, 2 * self.rows))
+        plt.figure(figsize=(len(self.X)/2, 2 * self.rows))
         i = 1
         for title, bits in data.items():
             self.make_plot(bits, i, title)
@@ -67,9 +65,9 @@ class Plotter:
 
 class Producer:
 
-    def __init__(self, string, encoder_meth, rows, cols):
+    def __init__(self, string: str, x_axis_len: int, encoder_meth, rows=2, cols=1):
         self.encoder = Encoder(string, encoder_meth)
-        self.plotter = Plotter(rows, cols, self.encoder.bitseq)
+        self.plotter = Plotter(x_axis_len, self.encoder.bitseq, rows, cols)
 
     def produce_plot(self):
         produced_data = self.encoder.encode_seq()
@@ -83,6 +81,7 @@ class Producer:
 
 
 if __name__ == '__main__':
-    producer = Producer("СЕРГ", nrzi, 2, 1)
+    data = input("Input your data to be encoded:")
+    producer = Producer(data, len(data) * 8, nrzi, rows=2)
     producer.add_method(enc_2b1q)
     producer.produce_plot()
