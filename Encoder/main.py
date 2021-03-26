@@ -16,11 +16,11 @@ class Encoder:
         else:
             self.methods.setdefault("nrz", nrz)
 
-    def get_bits(self):
+    def get_bits(self) -> list[int]:
         codes = (format(enc, '8b') for enc in self.string.encode('cp1251'))
         return list(map(int, ''.join(codes)))
 
-    def encode_seq(self):
+    def encode_seq(self) -> dict[Callable[[list], None], list[int]]:
         data = {}
         for method, func in self.methods.items():
             data.setdefault(method, func(self.bitseq))

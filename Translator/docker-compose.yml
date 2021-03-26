@@ -7,23 +7,30 @@ services:
       - ./backend:/src
     build: ./backend
     restart: on-failure
+    env_file:
+      - ./.env
     ports:
       - "5000:5000"
     links:
       - mongo
-#  frontend:
-#    container_name: frontend
-#    build: ./frontend
-#    ports:
-#      - 8080:8080
-#    volumes:
-#      - ./frontend:/project
-#      - /project/node_modules
+  frontend:
+    container_name: frontend
+    build: ./frontend
+    stdin_open: true
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/project
+      - /project/node_modules
+    links:
+      - backend
   mongo:
     container_name: mongo
     image: mongo
     volumes:
       - ./data:/data/db
     restart: on-failure
-    expose:
-     - 27017
+    ports:
+      - "27017:27017"
+    env_file:
+      - ./.env

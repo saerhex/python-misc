@@ -44,7 +44,7 @@ class Window(QtWidgets.QMainWindow):
         template = '|'.join(words)
         cwd_path = os.environ["PARSE_PATH"]
         os.chdir(cwd_path)
-        files = glob('source/*.html')
+        files = glob('public/*.html')
         occurs = []
         for file in files:
             with open(file, 'r') as f:
