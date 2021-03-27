@@ -7,7 +7,7 @@ const WordsInput = () => {
 
   const sendWords = async (e) => {
     e.preventDefault()
-    const resp = await fetch("http://127.0.0.1:5000/add-words/", {
+    const resp = await fetch("/add-words/", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=UTF-8'

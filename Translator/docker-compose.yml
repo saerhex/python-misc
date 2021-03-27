@@ -1,18 +1,6 @@
 version: "3.1"
 
 services:
-  backend:
-    container_name: backend
-    volumes:
-      - ./backend:/src
-    build: ./backend
-    restart: on-failure
-    env_file:
-      - ./.env
-    ports:
-      - "5000:5000"
-    links:
-      - mongo
   frontend:
     container_name: frontend
     build: ./frontend
@@ -22,8 +10,20 @@ services:
     volumes:
       - ./frontend:/project
       - /project/node_modules
-    links:
+    depends_on:
       - backend
+  backend:
+    container_name: backend
+    build: ./backend
+    restart: on-failure
+    volumes:
+      - ./backend:/src
+    env_file:
+      - ./.env
+    ports:
+      - "5000:5000"
+    links:
+      - mongo
   mongo:
     container_name: mongo
     image: mongo

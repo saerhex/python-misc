@@ -7,7 +7,7 @@ const Translation = () => {
 
   const fetchTranslate = async (e) => {
     e.preventDefault()
-    const resp = await fetch("http://127.0.0.1:5000/translate/", {
+    const resp = await fetch("/translate/", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json;charset=UTF-8'

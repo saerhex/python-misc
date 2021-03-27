@@ -1,17 +1,13 @@
-from flask import Flask, jsonify, request, url_for, redirect
-from pymongo import MongoClient
-from flask_cors import CORS
+from flask import jsonify, request, make_response
 from uuid import uuid1
-
-app = Flask(__name__)
-CORS(app)
-client = MongoClient("mongodb://localhost:27017/translator")
-db = client.translator
+from app import app, db
 
 
 @app.route('/')
 def index():
-    return redirect(url_for('translate'))
+    response = make_response("<h1>Hello from Flask!</h1>")
+    response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+    return response
 
 
 @app.route('/add-words/', methods=['POST'])
@@ -50,4 +46,4 @@ def translate():
 
 
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(host="0.0.0.0", port=5000)
